@@ -66,6 +66,11 @@
     border-radius: 4px;
 }
 
+.header-right button:nth-child(2) a {
+    color: white;
+    text-decoration: none;
+}
+
 .mobile-search {
     width: 96vw;
     margin: 10px auto;
@@ -103,10 +108,16 @@
     padding-left: 65px;
 }
 
-.css-b62m3t-container  {
+.css-b62m3t-container {
     width: 200px !important;
 }
-.css-13cymwt-control{
+
+.job-inputs .css-b62m3t-container {
+    width: 100% !important;
+    margin-top: 5px;
+}
+
+.css-13cymwt-control {
     width: 100%;
 }
 
@@ -153,7 +164,8 @@
     height: 100px;
     padding-top: 10px;
 }
-.card>.img>img{
+
+.card>.img>img {
     width: 64px;
     height: 64px;
 }
@@ -166,11 +178,12 @@
     justify-content: center;
 }
 
-.card>.title>h2{
+.card>.title>h2 {
     color: #3f3f3f;
     font-weight: 600;
 }
-.card>.title>h3{
+
+.card>.title>h3 {
     color: #3f3f3f;
     font-weight: 500;
 }
@@ -209,12 +222,12 @@
     color: white;
 }
 
-.active{
+.active {
     background-color: #bbfbbb;
     border: 2px solid green;
 }
 
-.job-info{
+.job-info {
     height: auto;
     display: flex;
     flex-direction: column;
@@ -223,35 +236,43 @@
     border: 1px solid grey;
 }
 
-.info-head{
+.info-head {
     display: flex;
     column-gap: 10px;
     align-items: center;
     justify-content: center;
 }
-.info-head>.job-description h2{
+
+.info-head>.job-description h2 {
     color: rgb(61, 61, 61);
 }
-.info-head>.job-description h3{
+
+.info-head>.job-description h3 {
     color: #6b6b6b;
 }
 
-.job-logo{
+.job-logo {
     padding-top: 10px;
 }
-.job-requirements h2, .job-responsibilites h2{
+
+.job-requirements h2,
+.job-responsibilites h2 {
     font-weight: bold;
 }
-.job-requirements h3, .job-responsibilites h3{
+
+.job-requirements h3,
+.job-responsibilites h3 {
     font-weight: normal;
     font-size: 16px;
 }
-.apply-button{
+
+.apply-button {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
 }
-.apply-button button{
+
+.apply-button button {
     border-radius: 4px;
     padding: 0px 10px;
     width: 70px;
@@ -262,7 +283,7 @@
     cursor: pointer;
 }
 
-.job-popularity{
+.job-popularity {
     padding: 20px;
     display: flex;
     column-gap: 15px;
@@ -270,7 +291,8 @@
     align-items: center;
     border: 1px solid grey;
 }
-.trending{
+
+.trending {
     width: 30%;
     height: 100px;
     display: flex;
@@ -292,13 +314,14 @@
     z-index: 999;
 }
 
-.promotion>div{
+.promotion>div {
     width: 40%;
     display: flex;
     align-items: center;
     column-gap: 10px;
 }
-.promotion>div>input{
+
+.promotion>div>input {
     height: 35px;
     width: 50%;
     outline: none;
@@ -306,7 +329,8 @@
     border-radius: 4px;
     padding: 10px;
 }
-.promotion>div>button{
+
+.promotion>div>button {
     border-radius: 4px;
     padding: 0px 10px;
     width: 70px;
@@ -315,23 +339,245 @@
     height: 35px;
     border: none;
 }
-.promotion>h3{
+
+.promotion>h3 {
     text-align: center;
 }
 
-@media screen and (max-width:900px){
-    .promotion{
+@media screen and (max-width:900px) {
+    .promotion {
         flex-direction: column;
         row-gap: 10px;
         padding: 10px 0px;
     }
-    .promotion>div{
+
+    .promotion>div {
         flex-direction: column;
         width: 100%;
         row-gap: 4px;
     }
-    .promotion>div>input, .promotion>div>button{
+
+    .promotion>div>input,
+    .promotion>div>button {
         width: 90%;
+    }
+}
+
+.job-post-container {
+    width: 100vw;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.job-post-box {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    padding-bottom: 20px;
+}
+.job-inputs-boxes{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.tagline-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tagline{
+    width: 70%;
+}
+
+.comapny-info,
+.job-details {
+    width: 70%;
+    border: 1px dashed rgb(221, 221, 221);
+    padding: 15px;
+}
+
+.personal-contact {
+    width: 70%;
+    border: 1px dashed rgb(221, 221, 221);
+    padding: 15px;
+    margin-bottom: 20px !important;
+
+}
+
+.input-parent {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
+}
+
+.main-input {
+    height: 35px;
+    width: 100%;
+    outline: none;
+    border: 1px solid rgb(148, 147, 147);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.input-img {
+    max-width: 190px;
+    display: none;
+}
+
+.labelFile {
+    display: flex;
+    justify-content: center;
+    width: 85%;
+    margin-top: -3px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    color: #404040;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    border-radius: 4px;
+    column-gap: 5px;
+    height: 35px;
+}
+
+.show-preview{
+    visibility: visible;
+}
+.hide-preview{
+    visibility: hidden;
+
+}
+
+.preview-img {
+    width: 40%;
+    height: 100px;
+    border: 1px solid red;
+}
+
+.company-inputs-parent,
+.job-inputs-parent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    margin-top: 12px;
+}
+
+.company-inputs,
+.job-inputs {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 5px;
+}
+
+.personal-inputs-text {
+    width: 40%;
+}
+
+.personal-inputs-text>h3 {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+textarea {
+    width: 100%;
+    resize: vertical;
+    margin-top: 15px;
+}
+
+.rti--container {
+    margin-top: 10px;
+}
+
+.job-apply-button {
+    width: 70%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.job-apply-button button {
+    border-radius: 4px;
+    padding: 0px 10px;
+    width: 120px;
+    height: 40px;
+    border: none;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+.input-parent label{
+    font-size: 14px;
+}
+
+.labelFile p{
+    font-size: 12px;
+}
+.labelFile svg{
+    margin-top: 4px;
+}
+
+.comapny-info > h3, .job-details>h3{
+    font-size: 16px;
+}
+
+.tagline h3, .personal-inputs-text h3{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:1500px) {
+
+    .comapny-info,
+    .job-details,
+    .personal-contact {
+        width: 100%;
+    }
+
+    .job-post-box {
+        width: 90vw;
+    }
+    .tagline{
+        width: 100%;
     }
 }
 
@@ -347,24 +593,29 @@
     .info-container {
         width: 98vw;
     }
-    .card{
+
+    .card {
         width: 100%;
         justify-content: space-between;
         padding: 2px 4px;
     }
-    .card>.title{
+
+    .card>.title {
         font-size: 14px;
     }
-    .card>.img, .card>.tags{
+
+    .card>.img,
+    .card>.tags {
         width: 20%;
     }
-    .card>.title{
+
+    .card>.title {
         width: 30%;
     }
 }
 
-@media screen and (min-width:992px) and (max-width:1500px){
-    .card{
+@media screen and (min-width:992px) and (max-width:1500px) {
+    .card {
         width: 100%;
     }
 }
@@ -388,6 +639,20 @@
     .header {
         padding: 10px 10px;
     }
+
+    .labelFile
+
+    /* ,.main-input */
+        {
+        width: 80vw;
+        margin: 0 auto;
+    }
+
+    .company-inputs,
+    .job-inputs,.job-apply-button {
+        width: 90vw;
+        margin: 0 auto;
+    }
 }
 
 @media screen and (max-width:950px) {
@@ -397,5 +662,11 @@
 
     .header-right button:first-child {
         display: block;
+    }
+}
+
+@media screen and (max-width:850px) {
+    .personal-inputs-text {
+        width: 100%;
     }
 }
