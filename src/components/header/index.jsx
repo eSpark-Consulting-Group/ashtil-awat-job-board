@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { seacrhIcon } from '../../assets'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     const [showSearch, setShowSearch] = useState(false)
@@ -17,7 +18,11 @@ const Header = () => {
                     <button onClick={() => { setShowSearch(!showSearch) }}>
                         <img src={seacrhIcon} alt="Search Icon" />
                     </button>
-                    <button>Post a Job</button>
+                    <button>
+                        <Link to={"/post-a-job"}>
+                            Post a Job
+                        </Link>
+                    </button>
                 </div>
             </div>
             <div className={`mobile-search ${showSearch ? "show-bar" : ""}`}>
