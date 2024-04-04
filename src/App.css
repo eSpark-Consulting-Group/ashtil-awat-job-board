@@ -103,11 +103,11 @@
     padding-left: 65px;
 }
 
-select {
-    width: 180px;
-    border: 1px solid rgb(88, 88, 88);
-    border-radius: 4px;
-    height: 30px;
+.css-b62m3t-container  {
+    width: 200px !important;
+}
+.css-13cymwt-control{
+    width: 100%;
 }
 
 
@@ -116,13 +116,15 @@ select {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+    padding-bottom: 100px;
 }
+
 
 .cards-conatiner {
     width: 66vw;
     /* height: 350px; */
-    overflow-y: auto;
-    max-height: 65vh;
+    /* overflow-y: auto;
+    max-height: 65vh; */
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -137,12 +139,13 @@ select {
 
 .card {
     width: 70%;
-    border: 1px solid grey;
+    border: 2px solid rgb(196, 195, 195);
     /* padding: 25px; */
     display: flex;
     justify-content: space-around;
     align-items: center;
     cursor: pointer;
+    min-height: 120px;
 }
 
 .card>.img {
@@ -150,13 +153,26 @@ select {
     height: 100px;
     padding-top: 10px;
 }
+.card>.img>img{
+    width: 64px;
+    height: 64px;
+}
 
 .card>.title {
     width: 30%;
     height: 100px;
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
+    justify-content: center;
+}
+
+.card>.title>h2{
+    color: #3f3f3f;
+    font-weight: 600;
+}
+.card>.title>h3{
+    color: #3f3f3f;
+    font-weight: 500;
 }
 
 .card>.tags {
@@ -194,7 +210,8 @@ select {
 }
 
 .active{
-    background-color: lightgreen;
+    background-color: #bbfbbb;
+    border: 2px solid green;
 }
 
 .job-info{
@@ -212,10 +229,14 @@ select {
     align-items: center;
     justify-content: center;
 }
+.info-head>.job-description h2{
+    color: rgb(61, 61, 61);
+}
+.info-head>.job-description h3{
+    color: #6b6b6b;
+}
 
 .job-logo{
-    width: 30%;
-    height: 100px;
     padding-top: 10px;
 }
 .job-requirements h2, .job-responsibilites h2{
@@ -223,6 +244,7 @@ select {
 }
 .job-requirements h3, .job-responsibilites h3{
     font-weight: normal;
+    font-size: 16px;
 }
 .apply-button{
     display: flex;
@@ -251,6 +273,66 @@ select {
 .trending{
     width: 30%;
     height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.promotion {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background-color: rgb(235, 233, 233);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    z-index: 999;
+}
+
+.promotion>div{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+.promotion>div>input{
+    height: 35px;
+    width: 50%;
+    outline: none;
+    border: 1px solid rgb(148, 147, 147);
+    border-radius: 4px;
+    padding: 10px;
+}
+.promotion>div>button{
+    border-radius: 4px;
+    padding: 0px 10px;
+    width: 70px;
+    background-color: green;
+    color: white;
+    height: 35px;
+    border: none;
+}
+.promotion>h3{
+    text-align: center;
+}
+
+@media screen and (max-width:900px){
+    .promotion{
+        flex-direction: column;
+        row-gap: 10px;
+        padding: 10px 0px;
+    }
+    .promotion>div{
+        flex-direction: column;
+        width: 100%;
+        row-gap: 4px;
+    }
+    .promotion>div>input, .promotion>div>button{
+        width: 90%;
+    }
 }
 
 @media screen and (max-width:991px) {
@@ -258,6 +340,7 @@ select {
         flex-direction: column;
         row-gap: 20px;
         align-items: center;
+        padding-bottom: 180px;
     }
 
     .cards-conatiner,
@@ -267,7 +350,7 @@ select {
     .card{
         width: 100%;
         justify-content: space-between;
-        padding-right: 5px;
+        padding: 2px 4px;
     }
     .card>.title{
         font-size: 14px;
@@ -290,12 +373,12 @@ select {
     .dropdowns-container {
         flex-direction: column;
         row-gap: 10px;
-        padding-left: 5px;
+        padding-left: 0px;
         align-items: center;
     }
 
-    select {
-        width: 97vw;
+    .css-b62m3t-container {
+        width: 97vw !important;
 
     }
 }

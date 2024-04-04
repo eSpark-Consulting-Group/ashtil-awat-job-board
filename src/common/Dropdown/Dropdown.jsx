@@ -1,18 +1,14 @@
-import React from 'react'
-import { locationOptions } from '../../constant'
+import React from 'react';
+import Select from 'react-select';
 
 const Dropdown = ({ placeholder, options }) => {
     return (
-        <div>
-            <select>
-                <option disabled selected>{placeholder}</option>
-                {options.map((item, index) => (
-                    <option value={item?.value} key={index}>{item?.option}</option>
-                ))}
-            </select>
-        </div>
-    )
-}
+        <Select
+            placeholder={placeholder}
+            options={options}
+            isSearchable={true}
+        />
+    );
+};
 
-
-export default Dropdown
+export default Dropdown;

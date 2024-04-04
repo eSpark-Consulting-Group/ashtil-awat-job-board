@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Header from '../header'
 import Dropdown from '../../common/Dropdown/Dropdown'
 import { companyOptions, jobsContent, locationOptions, roleOptions } from '../../constant'
-import seacrhIcon from "../../assets/magnifying-glass.png"
 import { apple, flames, google } from '../../assets'
 
 const Portal = () => {
@@ -75,6 +74,13 @@ const Portal = () => {
               <h3>91 applied this week</h3>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="promotion">
+        <h3>Signup for a curated list of jobs sent to your inbox every week</h3>
+        <div>
+          <input type="text" placeholder='john@maildrop.cc' />
+          <button>Submit</button>
         </div>
       </div>
     </div>

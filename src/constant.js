@@ -1,15 +1,15 @@
 export const locationOptions = [
     {
         value: "karachi",
-        option: "Karachi"
+        label: "Karachi"
     },
     {
         value: "lahore",
-        option: "Lahore"
+        label: "Lahore"
     },
     {
         value: "isl",
-        option: "Islamabad"
+        label: "Islamabad"
     },
 
 ]
@@ -18,23 +18,23 @@ export const locationOptions = [
 export const roleOptions = [
     {
         value: "PM",
-        option: "Product Manager"
+        label: "Product Manager"
     },
+    // {
+    //     value: "SE",
+    //     label: "Software Engineer"
+    // },
+    // {
+    //     value: "PM",
+    //     label: "Product Manager"
+    // },
+    // {
+    //     value: "PM",
+    //     label: "Product Manager"
+    // },
     {
         value: "SE",
-        option: "Software Engineer"
-    },
-    {
-        value: "PM",
-        option: "Product Manager"
-    },
-    {
-        value: "PM",
-        option: "Product Manager"
-    },
-    {
-        value: "SE",
-        option: "Software Engineer"
+        label: "Software Engineer"
     },
 ]
 
@@ -42,15 +42,15 @@ export const roleOptions = [
 export const companyOptions = [
     {
         value: "google",
-        option: "Google"
+        label: "Google"
     },
     {
         value: "fb",
-        option: "Facebook"
+        label: "Facebook"
     },
     {
         value: "microsoft",
-        option: "Microsoft"
+        label: "Microsoft"
     },
 ]
 
