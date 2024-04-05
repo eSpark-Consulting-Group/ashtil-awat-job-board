@@ -202,6 +202,7 @@
     color: white;
     border-radius: 8px;
     width: 70px;
+    padding: 2px 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -210,6 +211,7 @@
 
 .card>.tags>div {
     background-color: rgb(100, 100, 100);
+
 }
 
 .card button {

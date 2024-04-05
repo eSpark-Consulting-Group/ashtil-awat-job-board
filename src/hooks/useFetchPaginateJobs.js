@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import supabase from './useFetchPaginateJobs';
+import supabase from '../services/supabaseClient';
+import { StateCall } from '../store/contextApi';
 
-function useFetchPaginateJobs(searchTerm, selectedCompany, selectedRole, selectedLocation) {
-    const [smoothies, setSmoothies] = useState([]);
+function useFetchPaginateJobs(selectedCompany, selectedRole, selectedLocation, shouldFetchInitially = false) {
+    const { state, setState } = StateCall()
+    const { searchTerm } = state
     const [totalPages, setTotalPages] = useState(1);
     const [fetchError, setFetchError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -39,26 +41,28 @@ function useFetchPaginateJobs(searchTerm, selectedCompany, selectedRole, selecte
             const { data, error, count } = await query;
 
             if (error) {
-                setFetchError('Could not fetch the smoothies');
-                setSmoothies([]);
+                setFetchError('Could not fetch the jobs');
+                setState({ ...state, jobs: [] })
                 setLoading(false)
             } else {
-                setSmoothies(data);
+                setState({ ...state, jobs: data })
                 setTotalPages(Math.ceil(count / pageSize));
                 setFetchError(null);
                 setLoading(false)
             }
         } catch (error) {
-            console.error('Error fetching smoothies:', error.message);
-            setFetchError('Could not fetch the smoothies');
-            setSmoothies([]);
+            console.error('Error fetching jobs:', error.message);
+            setFetchError('Could not fetch the jobs');
+            setState({ ...state, jobs: [] })
             setLoading(false)
         }
     };
 
 
     useEffect(() => {
-        fetchJobs();
+        if (shouldFetchInitially) {
+            fetchJobs();
+        }
     }, [page, pageSize]);
 
     const refech = () => {
@@ -71,7 +75,7 @@ function useFetchPaginateJobs(searchTerm, selectedCompany, selectedRole, selecte
     }
 
 
-    return { refech, smoothies, totalPages, fetchError, page, pageSize, handlePageChange, loading };
+    return { refech, totalPages, fetchError, page, pageSize, handlePageChange, loading };
 }
 
 export default useFetchPaginateJobs;
