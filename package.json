@@ -11,12 +11,15 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.35.6",
+    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-select": "^5.8.0",
     "react-tag-input-component": "^2.0.2",
-    "uuid": "^9.0.1"
+    "react-toastify": "^10.0.5",
+    "uuid": "^9.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

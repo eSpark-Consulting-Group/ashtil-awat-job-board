@@ -2,7 +2,7 @@
 import React from 'react';
 import Select from 'react-select';
 
-const Dropdown = ({ name, placeholder, options, onChange }) => {
+const Dropdown = ({ name, placeholder, options, onChange, post }) => {
     const handleChange = (selectedOption) => {
         onChange(name, selectedOption.value);
     };
@@ -13,6 +13,7 @@ const Dropdown = ({ name, placeholder, options, onChange }) => {
             options={options}
             isSearchable={true}
             onChange={handleChange}
+            defaultValue={post ? options[0] : null}
         />
     );
 };

@@ -29,9 +29,9 @@ const Portal = () => {
     <div>
       <Header />
       <div className="dropdowns-container">
-        <Dropdown placeholder={"Location"} options={locationOptions} />
-        <Dropdown placeholder={"Role"} options={roleOptions} />
-        <Dropdown placeholder={"Company"} options={companyOptions} />
+        <Dropdown placeholder={"Location"} options={locationOptions} onChange={()=>{}} />
+        <Dropdown placeholder={"Role"} options={roleOptions} onChange={()=>{}} />
+        <Dropdown placeholder={"Company"} options={companyOptions} onChange={()=>{}} />
       </div>
 
       <div className="portal-main">

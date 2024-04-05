@@ -1,5 +1,5 @@
 // PostJob.js
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../header'
 import { useNavigate } from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid';
@@ -9,6 +9,9 @@ import ImgUploader from '../../common/ImgUpload/ImgUploader'
 import supabase, { supabaseBucketBaseUrl } from "../../services/supabaseClient"
 import Dropdown from '../../common/Dropdown/Dropdown'
 import { TagsInput } from 'react-tag-input-component'
+import { useFormik } from 'formik';
+import { jobInfoSchema } from '../../schemas';
+import { toast } from 'react-toastify';
 
 
 const PostJob = () => {
@@ -19,14 +22,12 @@ const PostJob = () => {
     comp_website: "",
     job_title: "",
     comp_logo: "",
-    is_remote: "",
+    is_remote: "yes",
     primary_location: "",
     job_description: "",
     full_name: "",
     email: ""
   })
-
-  const [showImg, setShowImg] = useState(false)
 
   const handleInputChange = (name, value) => {
     setJobData({
@@ -63,45 +64,35 @@ const PostJob = () => {
     }
   }
 
-
-  const SubmitHandler = async () => {
-
-    if (!jobData.comp_logo) {
-      alert("Please upload a logo")
-      return
+  const { values, handleSubmit, handleChange, errors, touched, isValid, submitCount } = useFormik({
+    initialValues: {
+      tags: [],
+      comp_name: "",
+      comp_website: "",
+      job_title: "",
+      primary_location: "",
+      job_description: "",
+      full_name: "",
+      email: ""
+    },
+    validationSchema: jobInfoSchema,
+    onSubmit: async (values) => {
+      console.log({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo });
+      await supabase
+        .from('Jobs')
+        .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
     }
 
-    if (!jobData.comp_name || !jobData.comp_website || !jobData.job_title || !jobData.is_remote || !jobData.primary_location || !jobData.job_description || !jobData.full_name || !jobData.email) {
-      alert("Please fill in all fields")
-      return
+  });
+  useEffect(() => {
+    if (submitCount > 0 && !isValid) {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError);
     }
-
-    const { data, error, } = await supabase
-      .from('Jobs')
-      .insert(jobData)
-
-    if (error) {
-      console.log(error)
+    else if ((submitCount > 0 && !jobData.comp_logo)) {
+      toast.error("Company logo is required");
     }
-    if (data) {
-      console.log(data)
-      setJobData({
-        tags: [],
-        comp_name: "",
-        comp_website: "",
-        job_title: "",
-        comp_logo: "",
-        is_remote: "",
-        primary_location: "",
-        job_description: "",
-        full_name: "",
-        email: ""
-      })
-      alert("Job posted successfully")
-
-      navigate('/')
-    }
-  }
+  }, [isValid, submitCount])
 
   return (
     <>
@@ -114,27 +105,26 @@ const PostJob = () => {
               <h3>Share your job post with thousands of job seekers</h3>
             </div>
           </div>
-          <div className="job-inputs-boxes">
+          <form className="job-inputs-boxes" onSubmit={handleSubmit}>
             <div className="comapny-info">
               <h3>Company Details</h3>
               <div className="company-inputs-parent">
                 {companyInputs.map((item, index) => (
                   <div className="company-inputs" key={index}>
-                    <Input onChange={handleInputChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                    <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+
                   </div>
                 ))}
                 <div className="company-inputs">
                   <div style={{ display: 'flex', rowGap: "12px", flexDirection: "column" }}>
                     <p style={{ fontSize: "14px" }}>Company logo</p>
                     <ImgUploader onFileChange={handleImgChange} />
-                    {
-                      jobData?.comp_logo &&
-                      <img
-                        style={{ width: "100px", height: "100px", objectFit: "contain", borderRadius: "5px" }}
-                        src={jobData?.comp_logo} alt="company logo" />
-                    }
                   </div>
-                  <div className={`preview-img ${showImg ? "show-preview" : 'hide-preview'}`}></div>
+                  {jobData?.comp_logo && <div className={`preview-img`}>
+                    <img
+                      style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "5px" }}
+                      src={jobData?.comp_logo} alt="company logo" />
+                  </div>}
                 </div>
               </div>
             </div>
@@ -145,14 +135,16 @@ const PostJob = () => {
                   <div className="job-inputs">
                     {item?.type === "text"
                       ?
-                      <Input onChange={handleInputChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                      <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+
                       :
                       <>
-                        <p style={{ fontSize: "14px" }}>Company logo</p>
+                        <p style={{ fontSize: "14px" }}>is Remote?</p>
                         <Dropdown
                           name={item?.name} // Pass the name attribute
                           options={item?.options}
-                          placeholder={item?.placeholder}
+                          post={true}
+                          // placeholder={item?.placeholder}
                           onChange={handleDropdownChange}
                         />
                       </>
@@ -164,14 +156,21 @@ const PostJob = () => {
                 <label htmlFor="job_description" style={{ fontSize: "14px" }}>
                   Job Description
                 </label>
-                <textarea onChange={(e) => handleInputChange("job_description", e.target.value)} name="job_description" id="job_description" cols="30" rows="6"></textarea>
+                <textarea value={values.job_description} onChange={handleChange} name="job_description" id="job_description" cols="30" rows="6"></textarea>
               </div>
               <TagsInput
-                value={jobData?.tags}
-                onChange={(e) => handleInputChange("tags", e)}
+                value={values.tags}
+                onChange={(tags) => {
+                  handleChange({
+                    target: {
+                      name: "tags",
+                      value: tags,
+                    },
+                  });
+                }}
                 name="tags"
                 placeHolder="Tags(Start with #)"
-                classNames={"tags-input"}
+                classNames="tags-input"
                 beforeAddValidate={(tag) => {
                   if (tag.trim().startsWith("#")) {
                     return true;
@@ -189,18 +188,20 @@ const PostJob = () => {
                 </div>
                 {personalInfo.map((item, index) => (
                   <div className="personal-inputs" key={index}>
-                    <Input onChange={handleInputChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                    <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+
                   </div>
                 ))}
               </div>
             </div>
             <div className="job-apply-button">
-              <button onClick={SubmitHandler}>Apply for $99</button>
+              <button type='submit'>Apply for $99</button>
             </div>
-          </div>
+          </form>
 
         </div>
       </div>
+
     </>
   )
 }
