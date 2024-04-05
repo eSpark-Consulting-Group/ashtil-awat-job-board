@@ -1,14 +1,18 @@
 // PostJob.js
 import React, { useState } from 'react'
 import Header from '../header'
+import { useNavigate } from "react-router-dom"
+import { v4 as uuidv4 } from 'uuid';
 import Input from '../../common/Inputs/Input'
 import { companyInputs, jobInputs, personalInfo } from '../../constant'
 import ImgUploader from '../../common/ImgUpload/ImgUploader'
+import supabase, { supabaseBucketBaseUrl } from "../../services/supabaseClient"
 import Dropdown from '../../common/Dropdown/Dropdown'
 import { TagsInput } from 'react-tag-input-component'
 
 
 const PostJob = () => {
+  const navigate = useNavigate()
   const [jobData, setJobData] = useState({
     tags: [],
     comp_name: "",
@@ -38,15 +42,65 @@ const PostJob = () => {
     });
   };
 
-  const handleImgChange = (file) => {
-    setJobData({
-      ...jobData,
-      comp_logo: file,
-    });
-  };
 
-  const SubmitHandler = () => {
-    console.log(jobData)
+  async function handleImgChange(e) {
+    let file = e
+
+
+    const { data, error } = await supabase
+      .storage
+      .from('images')
+      .upload(uuidv4(), file)
+
+    console.log({ data });
+    if (data) {
+      setJobData({
+        ...jobData,
+        comp_logo: supabaseBucketBaseUrl + data?.fullPath,
+      });
+    } else {
+      console.log(error);
+    }
+  }
+
+
+  const SubmitHandler = async () => {
+
+    if (!jobData.comp_logo) {
+      alert("Please upload a logo")
+      return
+    }
+
+    if (!jobData.comp_name || !jobData.comp_website || !jobData.job_title || !jobData.is_remote || !jobData.primary_location || !jobData.job_description || !jobData.full_name || !jobData.email) {
+      alert("Please fill in all fields")
+      return
+    }
+
+    const { data, error, } = await supabase
+      .from('Jobs')
+      .insert(jobData)
+
+    if (error) {
+      console.log(error)
+    }
+    if (data) {
+      console.log(data)
+      setJobData({
+        tags: [],
+        comp_name: "",
+        comp_website: "",
+        job_title: "",
+        comp_logo: "",
+        is_remote: "",
+        primary_location: "",
+        job_description: "",
+        full_name: "",
+        email: ""
+      })
+      alert("Job posted successfully")
+
+      navigate('/')
+    }
   }
 
   return (
@@ -71,8 +125,14 @@ const PostJob = () => {
                 ))}
                 <div className="company-inputs">
                   <div style={{ display: 'flex', rowGap: "12px", flexDirection: "column" }}>
-                    <p style={{fontSize:"14px"}}>Company logo</p>
+                    <p style={{ fontSize: "14px" }}>Company logo</p>
                     <ImgUploader onFileChange={handleImgChange} />
+                    {
+                      jobData?.comp_logo &&
+                      <img
+                        style={{ width: "100px", height: "100px", objectFit: "contain", borderRadius: "5px" }}
+                        src={jobData?.comp_logo} alt="company logo" />
+                    }
                   </div>
                   <div className={`preview-img ${showImg ? "show-preview" : 'hide-preview'}`}></div>
                 </div>
@@ -88,7 +148,7 @@ const PostJob = () => {
                       <Input onChange={handleInputChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
                       :
                       <>
-                        <p style={{fontSize:"14px"}}>Company logo</p>
+                        <p style={{ fontSize: "14px" }}>Company logo</p>
                         <Dropdown
                           name={item?.name} // Pass the name attribute
                           options={item?.options}
@@ -100,8 +160,8 @@ const PostJob = () => {
                   </div>
                 ))}
               </div>
-              <div style={{ marginTop: "10px", display: "flex", flexDirection: "column"}}>
-                <label htmlFor="job_description" style={{fontSize:"14px"}}>
+              <div style={{ marginTop: "10px", display: "flex", flexDirection: "column" }}>
+                <label htmlFor="job_description" style={{ fontSize: "14px" }}>
                   Job Description
                 </label>
                 <textarea onChange={(e) => handleInputChange("job_description", e.target.value)} name="job_description" id="job_description" cols="30" rows="6"></textarea>

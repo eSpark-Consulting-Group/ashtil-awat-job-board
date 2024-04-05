@@ -3,13 +3,28 @@ import Header from '../header'
 import Dropdown from '../../common/Dropdown/Dropdown'
 import { companyOptions, jobsContent, locationOptions, roleOptions } from '../../constant'
 import { apple, flames, google } from '../../assets'
+import useFetchPaginateJobs from '../../hooks/useFetchPaginateJobs'
+import useFetchJobs from '../../hooks/useFetchJobs'
 
 const Portal = () => {
   const [activeItem, setActiveItem] = useState(jobsContent[0])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedlocation, setSelectedLocation] = useState('');
+  const { companyList, roleList, locationList } = useFetchJobs();
+  const {fetchError, smoothies, totalPages, page, handlePageChange, refech} = useFetchPaginateJobs(searchTerm, selectedCompany, selectedRole, selectedlocation);
   
   const handleJobClick = (index) => {
     setActiveItem(jobsContent[index])
   }
+
+  const handleSearch = () => {
+    refech()
+}
+
+
+
   return (
     <div>
       <Header />
