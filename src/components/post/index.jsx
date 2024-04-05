@@ -56,7 +56,7 @@ const PostJob = () => {
     if (data) {
       setJobData({
         ...jobData,
-        comp_logo: supabaseBucketBaseUrl + data?.fullPath,
+        comp_logo: supabaseBucketBaseUrl + data?.Key,
       });
     } else {
       console.log(error);
