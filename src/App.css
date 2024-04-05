@@ -224,6 +224,25 @@
     color: white;
 }
 
+.general-btn {
+    border-radius: 4px;
+    padding: 0px 10px;
+    width: 70px;
+    height: 35px;
+    border: none;
+    background-color: green;
+    color: white;
+}
+.general-btn-cancel {
+    border-radius: 4px;
+    padding: 0px 10px;
+    width: 70px;
+    height: 35px;
+    border: none;
+    background-color: red;
+    color: white;
+}
+
 .active {
     background-color: #bbfbbb;
     border: 2px solid green;
@@ -539,6 +558,13 @@ textarea {
     font-weight: 500;
 }
 
+
+.portal-no-jobs-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
 
 
 

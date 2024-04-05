@@ -17,15 +17,15 @@ function useFetchPaginateJobs(selectedCompany, selectedRole, selectedLocation, s
             const matchfilter = {};
 
             if (selectedCompany) {
-                matchfilter.comp_name = selectedCompany;
+                matchfilter.comp_name = selectedCompany?.value
             }
 
             if (selectedRole) {
-                matchfilter.job_title = selectedRole;
+                matchfilter.job_title = selectedRole?.value
             }
 
             if (selectedLocation) {
-                matchfilter.primary_location = selectedLocation;
+                matchfilter.primary_location = selectedLocation?.value
             }
 
             if (searchTerm && page !== 1) {

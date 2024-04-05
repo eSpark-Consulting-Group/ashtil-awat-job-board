@@ -2,18 +2,16 @@
 import React from 'react';
 import Select from 'react-select';
 
-const Dropdown = ({ name, placeholder, options, onChange, post }) => {
-    const handleChange = (selectedOption) => {
-        onChange(name, selectedOption.value);
-    };
+const Dropdown = ({ name, placeholder, options, onChange, post, value }) => {
 
     return (
         <Select
             placeholder={placeholder}
             options={options}
             isSearchable={true}
-            onChange={handleChange}
+            onChange={onChange}
             defaultValue={post ? options[0] : null}
+            value={value}
         />
     );
 };

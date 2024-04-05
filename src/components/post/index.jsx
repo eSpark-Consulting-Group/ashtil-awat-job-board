@@ -36,10 +36,10 @@ const PostJob = () => {
     });
   };
 
-  const handleDropdownChange = (name, value) => {
+  const handleDropdownChange = (item) => {
     setJobData({
       ...jobData,
-      [name]: value
+      is_remote: item.value
     });
   };
 
@@ -144,7 +144,6 @@ const PostJob = () => {
                           name={item?.name} // Pass the name attribute
                           options={item?.options}
                           post={true}
-                          // placeholder={item?.placeholder}
                           onChange={handleDropdownChange}
                         />
                       </>

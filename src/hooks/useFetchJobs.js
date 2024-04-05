@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import supabase  from '../hooks/useFetchJobs';
+import supabase  from '../services/supabaseClient';
 
 function useFetchJobs() {
     const [companyList, setCompanyList] = useState([]);
@@ -20,13 +20,18 @@ function useFetchJobs() {
                     setError('Error fetching companies, roles, and locations');
                 } else {
                     const companies = data.map(company => company.comp_name);
-                    setCompanyList(companies);
-
                     const roles = data.map(role => role.job_title);
-                    setRoleList(roles);
-
                     const locations = data.map(location => location.primary_location);
-                    setLocationList(locations);
+
+                    const companyObjects = companies.map(company => ({ value: company, label: company }));
+                    const roleObjects = roles.map(role => ({ value: role, label: role }));
+                    const locationObjects = locations.map(location => ({ value: location, label: location }));
+               
+                    setCompanyList(companyObjects);
+
+                    setRoleList(roleObjects);
+
+                    setLocationList(locationObjects);
                 }
             } catch (error) {
                 setError('Error fetching companies, roles, and locations');
