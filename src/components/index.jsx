@@ -1,10 +1,11 @@
-import Portal from "./portal";
-import PostJob from "./post";
-import Header from "./header";
-
+import Header from "./layout/Header";
+import Dropdown from "./common/Dropdown";
+import ImgUploader from "./common/ImgUploader";
+import Input from "./common/Input";
 
 export {
-    Portal,
-    PostJob,
-    Header
+    Header,
+    Dropdown,
+    ImgUploader,
+    Input
 }

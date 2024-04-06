@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../header'
-import Dropdown from '../../common/Dropdown/Dropdown'
-import { flames } from '../../assets'
-import useFetchJobs from '../../hooks/useFetchJobs'
 import { Link } from 'react-router-dom'
-import { StateCall } from '../../store/contextApi'
-import useFetchFilters from '../../hooks/useFetchFilters'
+import { Dropdown, Header } from '../components'
+import { flames } from '../assets'
+import { useFetchFilters, useFetchJobs } from '../hooks'
 
-const Portal = () => {
-  const { state, setState } = StateCall()
+
+const JobListing = () => {
   const { companyList, roleList, locationList } = useFetchFilters();
-
   const [page, setPage] = useState(1);
   const [activeItem, setActiveItem] = useState()
   const [selectedCompany, setSelectedCompany] = useState('');
@@ -226,4 +222,4 @@ const Portal = () => {
   )
 }
 
-export default Portal
+export default JobListing

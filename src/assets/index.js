@@ -1,11 +1,7 @@
-import seacrhIcon from "./magnifying-glass.png"
-import apple from "./apple.png"
-import google from "./google.png"
-import flames from "./flames.png"
+import seacrhIcon from "./icons/magnifying-glass.png"
+import flames from "./images/flames.png"
 
 export {
     seacrhIcon,
-    apple,
-    google,
     flames
 }

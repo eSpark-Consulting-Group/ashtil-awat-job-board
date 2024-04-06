@@ -1,17 +1,13 @@
-// PostJob.js
 import React, { useEffect, useState } from 'react'
-import Header from '../header'
 import { useNavigate } from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid';
-import Input from '../../common/Inputs/Input'
-import { companyInputs, jobInputs, personalInfo } from '../../constant'
-import ImgUploader from '../../common/ImgUpload/ImgUploader'
-import supabase, { supabaseBucketBaseUrl } from "../../services/supabaseClient"
-import Dropdown from '../../common/Dropdown/Dropdown'
+import { companyInputs, jobInputs, personalInfo } from '../constant'
+import supabase, { supabaseBucketBaseUrl } from "../services/supabaseClient"
 import { TagsInput } from 'react-tag-input-component'
 import { useFormik } from 'formik';
-import { jobInfoSchema } from '../../schemas';
+import { jobInfoSchema } from '../schemas';
 import { toast } from 'react-toastify';
+import { Header, Dropdown, Input, ImgUploader } from '../components';
 
 
 const PostJob = () => {

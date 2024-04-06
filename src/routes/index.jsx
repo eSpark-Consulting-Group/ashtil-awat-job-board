@@ -1,11 +1,12 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Portal, PostJob } from "../components";
+import { JobListing, PostJob } from "../pages";
+
 
 const Routes = () => {
     return useRoutes([
         {
             path: "/",
-            element: <Portal />,
+            element: <JobListing />,
         },
         {
             path: "/post-a-job",
