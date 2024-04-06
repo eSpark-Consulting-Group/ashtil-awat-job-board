@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { seacrhIcon } from '../../assets'
 import { Link } from 'react-router-dom'
 import { StateCall } from '../../store/contextApi'
-import useFetchPaginateJobs from '../../hooks/useFetchPaginateJobs'
 
-const Header = () => {
+const Header = ({ onSearch }) => {
     const { state, setState } = StateCall()
     const [showSearch, setShowSearch] = useState(false)
-    const { refech } = useFetchPaginateJobs();
 
     const handleSearch = () => {
-        refech()
-    }
+        onSearch(state.searchTerm)
+    };
+
 
     return (
         <>

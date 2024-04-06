@@ -10,7 +10,6 @@ const ContextApi = ({ children }) => {
 
   const [state, setState] = useState({
     searchTerm: '',
-    jobs: []
   })
 
 

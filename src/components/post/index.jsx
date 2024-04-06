@@ -29,12 +29,6 @@ const PostJob = () => {
     email: ""
   })
 
-  const handleInputChange = (name, value) => {
-    setJobData({
-      ...jobData,
-      [name]: value
-    });
-  };
 
   const handleDropdownChange = (item) => {
     setJobData({
