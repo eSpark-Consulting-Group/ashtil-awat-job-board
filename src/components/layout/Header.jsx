@@ -37,8 +37,11 @@ const Header = ({ onSearch }) => {
                 </div>
             </div>
             <div className={`mobile-search ${showSearch ? "show-bar" : ""}`}>
-                <input type="text" placeholder='Search by company, title, or location' />
-                <button>Search</button>
+                <input
+                    value={state.searchTerm}
+                    onChange={(e) => setState({ ...state, searchTerm: e.target.value })}
+                    type="text" placeholder='Search by company, title, or location' />
+                <button onClick={handleSearch}>Search</button>
             </div>
         </>
     )

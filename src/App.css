@@ -241,6 +241,7 @@
     border: none;
     background-color: red;
     color: white;
+    cursor: pointer;
 }
 
 .active {
@@ -291,6 +292,7 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
+    text-decoration: none;
 }
 
 .apply-button button {
