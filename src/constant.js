@@ -115,7 +115,7 @@ export const companyInputs = [
         label: "Company Website",
         placeholder: "google.com",
         name: "comp_website",
-        type: "text"
+        type: "url"
     },
 
 ]

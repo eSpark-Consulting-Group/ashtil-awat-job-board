@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dropdown, Header, JobCard, JobInfo } from '../components'
 import { useFetchFilters, useFetchJobs } from '../hooks'
 import { getCurrentPageJobs, getTotalPages } from '../utils'
+import Loader from "react-js-loader";
 
 
 
@@ -64,6 +65,16 @@ const JobListing = () => {
     return <div>Error: {error}</div>;
   }
 
+  if (!loading && filteredJobs?.length <= 0) {
+    return (
+      <div className='portal-no-jobs-screen'>
+        <h3>No Jobs Found</h3>
+      </div>
+    )
+  }
+
+  console.log(activeItem)
+
 
 
   return (
@@ -92,39 +103,32 @@ const JobListing = () => {
       {
         !loading ?
           <>
-            {
-              filteredJobs?.length > 0 ?
-                <div className="portal-main">
-                  <div className="cards-conatiner">
-                    <div>
-                      {getCurrentPageJobs(page, itemsPerPage, filteredJobs)?.map((item, index) => (
-                        <JobCard item={item} index={index} jobs={jobs} activeItem={activeItem} setActiveItem={setActiveItem} />
-                      )
-                      )}
-                    </div>
+            <div className="portal-main">
+              <div className="cards-conatiner">
+                <div>
+                  {getCurrentPageJobs(page, itemsPerPage, filteredJobs)?.map((item, index) => (
+                    <JobCard item={item} index={index} jobs={jobs} activeItem={activeItem} setActiveItem={setActiveItem} />
+                  )
+                  )}
+                </div>
 
-                    <div className="pagination-container">
-                      <div>
-                        <button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-                        &nbsp;
-                        <span>{page} / {getTotalPages(itemsPerPage, filteredJobs)}</span>
-                        &nbsp;
-                        <button onClick={() => setPage(page + 1)} disabled={page === getTotalPages(itemsPerPage, filteredJobs)}>Next</button>
-                      </div>
-                    </div>
+                <div className="pagination-container">
+                  <div>
+                    <button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+                    &nbsp;
+                    <span>{page} / {getTotalPages(itemsPerPage, filteredJobs)}</span>
+                    &nbsp;
+                    <button onClick={() => setPage(page + 1)} disabled={page === getTotalPages(itemsPerPage, filteredJobs)}>Next</button>
                   </div>
+                </div>
+              </div>
 
 
-                  <JobInfo activeItem={activeItem} />
-                </div>
-                :
-                <div className='portal-no-jobs-screen'>
-                  <h3>No Jobs Found</h3>
-                </div>
-            }
+              <JobInfo activeItem={activeItem} />
+            </div>
           </>
           : <div className='portal-no-jobs-screen'>
-            <h3>Loading...</h3>
+            <Loader type="spinner-default" bgColor={"#48494a"} color={"#00ff37"} size={40} />
           </div>
       }
 

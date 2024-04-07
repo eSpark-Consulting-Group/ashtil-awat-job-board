@@ -8,10 +8,12 @@ import { useFormik } from 'formik';
 import { jobInfoSchema } from '../schemas';
 import { toast } from 'react-toastify';
 import { Header, Dropdown, Input, ImgUploader } from '../components';
+import Loader from "react-js-loader";
 
 
 const PostJob = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [jobData, setJobData] = useState({
     tags: [],
     comp_name: "",
@@ -43,14 +45,14 @@ const PostJob = () => {
       .from('images')
       .upload(uuidv4(), file)
 
-    console.log({ data });
+    // console.log({ data });
     if (data) {
       setJobData({
         ...jobData,
         comp_logo: supabaseBucketBaseUrl + data?.Key,
       });
     } else {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -67,11 +69,32 @@ const PostJob = () => {
     },
     validationSchema: jobInfoSchema,
     onSubmit: async (values) => {
-      console.log({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo });
-      await supabase
+      setLoading(true)
+    
+      if (!jobData.comp_logo || jobData.comp_logo === "") {
+        // toast.error("Company logo is required");
+        // console.log("object")
+        setLoading(false);
+        return;
+      }
+    
+      const { data, error } = await supabase
         .from('Jobs')
         .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
+    
+      if (error) {
+        console.log(error)
+        setLoading(false)
+        return;
+      }
+      
+      if (data && isValid) {
+        console.log(data,"data")
+        setLoading(false)
+        // navigate("/")
+      }
     }
+    
 
   });
   useEffect(() => {
@@ -79,7 +102,7 @@ const PostJob = () => {
       const firstError = Object.values(errors)[0];
       toast.error(firstError);
     }
-    else if ((submitCount > 0 && !jobData.comp_logo)) {
+    else if ((submitCount > 0 && !jobData.comp_logo) || (submitCount > 0 && jobData.comp_logo === "")) {
       toast.error("Company logo is required");
     }
   }, [isValid, submitCount])
@@ -184,7 +207,7 @@ const PostJob = () => {
               </div>
             </div>
             <div className="job-apply-button">
-              <button type='submit'>Apply for $99</button>
+              <button type='submit'>{loading ? <Loader type="spinner-default" bgColor={"#ffffff"} color={"#00ff37"} size={30} /> : "Apply for $99"}</button>
             </div>
           </form>
 

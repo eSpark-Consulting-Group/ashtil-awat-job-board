@@ -17,8 +17,8 @@ const JobInfo = ({ activeItem }) => {
               src={activeItem?.comp_logo} alt="" />
           </div>
           <div className="job-description">
-            <h2>{activeItem?.role}</h2>
-            <h3>{activeItem?.company}</h3>
+            <h2>{activeItem?.job_title}</h2>
+            <h3>{activeItem?.comp_name}</h3>
           </div>
         </div>
         <div className="job-requirements">

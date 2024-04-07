@@ -141,6 +141,12 @@
     row-gap: 10px;
 }
 
+.cards-conatiner>div{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
 .info-container {
     width: 20vw;
     display: flex;
@@ -201,8 +207,8 @@
 .card>.tags>div {
     color: white;
     border-radius: 8px;
-    width: 70px;
-    padding: 2px 5px;
+    min-width: 70px;
+    padding: 5px 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,6 +228,7 @@
     border: none;
     background-color: green;
     color: white;
+    cursor: pointer;
 }
 
 .general-btn {
@@ -275,6 +282,12 @@
 
 .job-logo {
     padding-top: 10px;
+}
+
+.job-requirements,.job-responsibilites{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 }
 
 .job-requirements h2,
@@ -528,6 +541,11 @@ textarea {
     display: flex;
     justify-content: flex-end;
 }
+.job-apply-button button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .job-apply-button button {
     border-radius: 4px;
@@ -565,7 +583,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 70vh;
 }
 
 
@@ -655,6 +673,10 @@ textarea {
         row-gap: 10px;
         padding-left: 0px;
         align-items: center;
+    }
+
+    .portal-no-jobs-screen{
+        height: 45vh;
     }
 
     .css-b62m3t-container {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const JobCard = ({item, index, jobs, activeItem, setActiveItem}) => {
     const { comp_logo, job_title, comp_name, tags, comp_website } = item || {}
     return (
-        <div key={index} className={`card ${index === jobs?.indexOf(activeItem) ? 'active' : ''}`} onClick={() => setActiveItem(jobs[index])}>
+        <div key={index} className={`card ${item === activeItem ? 'active' : ''}`} onClick={() => setActiveItem(item)}>
             <div className='img'>
                 <img src={comp_logo} alt="Company Icon" />
             </div>
