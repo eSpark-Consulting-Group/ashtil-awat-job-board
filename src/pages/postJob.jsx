@@ -70,31 +70,34 @@ const PostJob = () => {
     validationSchema: jobInfoSchema,
     onSubmit: async (values) => {
       setLoading(true)
-    
+
       if (!jobData.comp_logo || jobData.comp_logo === "") {
         // toast.error("Company logo is required");
         // console.log("object")
         setLoading(false);
         return;
       }
-    
+
       const { data, error } = await supabase
         .from('Jobs')
         .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
-    
+
       if (error) {
-        console.log(error)
+        toast.error(error?.message)
         setLoading(false)
         return;
       }
-      
+
       if (data && isValid) {
-        console.log(data,"data")
-        setLoading(false)
-        // navigate("/")
+        setLoading(false);
+        toast.success("Job posted successfully");
+        setTimeout(() => {
+          navigate("/"); 
+        }, 2000); 
       }
+
     }
-    
+
 
   });
   useEffect(() => {
