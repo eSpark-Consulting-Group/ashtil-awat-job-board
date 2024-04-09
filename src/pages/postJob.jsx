@@ -86,10 +86,13 @@ const PostJob = () => {
     if (error) {
       console.log(error?.message)
       setWindowLoading(false)
+      toast.error("Something went wrong. Please try again")
     }
 
     if (data) {
       setWindowLoading(false)
+      localStorage.removeItem("job-data")
+      toast.success("Job posted successfully")
       navigate("/")
     }
   }

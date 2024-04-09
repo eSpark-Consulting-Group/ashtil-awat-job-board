@@ -5,7 +5,6 @@ import {
     useElements
 } from "@stripe/react-stripe-js";
 import { StateCall } from "../../store/contextApi";
-import supabase from "../../services/supabaseClient";
 
 export default function CheckoutForm() {
     const stripe = useStripe();
@@ -13,7 +12,7 @@ export default function CheckoutForm() {
 
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const { state, setState } = StateCall()
+    const { state } = StateCall()
     const { jobData } = state
 
 
