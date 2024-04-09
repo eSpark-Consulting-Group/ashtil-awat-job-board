@@ -83,7 +83,7 @@ export default function CheckoutForm() {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: "http://127.0.0.1:5173",
+                return_url: "http://127.0.0.1:5173/post-a-job",
             },
         });
 

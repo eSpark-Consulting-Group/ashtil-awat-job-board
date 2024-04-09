@@ -20,6 +20,7 @@ const PostJob = () => {
   const { state, setState } = StateCall()
   const [clientSecret, setClientSecret] = useState("");
   const { jobData } = state
+  const [windowLoading, setWindowLoading] = useState(false)
   // const [jobData, setJobData] = useState({
   //   tags: [],
   //   comp_name: "",
@@ -96,9 +97,24 @@ const PostJob = () => {
       console.log(data, "DSA")
       setIsOpen(true)
       setLoading(false)
+      localStorage.setItem("job-data", JSON.stringify(jobData))
     }
 
   }
+
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentIntent = urlParams.get('payment_intent');
+    const paymentIntentClientSecret = urlParams.get('payment_intent_client_secret');
+    const redirectStatus = urlParams.get('redirect_status');
+    const job = localStorage.getItem("job-data")
+
+    if (paymentIntent && paymentIntentClientSecret && redirectStatus === "succeeded" && job) {
+      setWindowLoading(true)
+      console.log(JSON.parse(job))
+    }
+  }, []);
 
 
   const CloseHandler = () => {
@@ -183,12 +199,16 @@ const PostJob = () => {
     e.preventDefault()
     setIsOpen(true)
   }
+
+
   // handleChange = (e)=>{console.log(e)}
 
   return (
     <>
       <Header />
-      <div className="job-post-container">
+      {windowLoading ? <div style={{ width: "100vw", height: "70vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Loader type="spinner-default" bgColor={"red"} color={"#00ff37"} size={70} />
+      </div> : <div className="job-post-container">
         <div className="job-post-box">
           <div className="tagline-parent">
             <div className="tagline">
@@ -293,7 +313,7 @@ const PostJob = () => {
           </form>
           <Modal clientSecret={clientSecret} visible={isOpen} onClose={CloseHandler} />
         </div>
-      </div>
+      </div>}
 
     </>
   )
