@@ -16,20 +16,7 @@ export default function CheckoutForm() {
     const { state, setState } = StateCall()
     const { jobData } = state
 
-    const UploadJobSupabase = async () => {
-        const { data, error } = await supabase
-            .from('Jobs')
-            .insert(jobData)
 
-        if (error) {
-            console.log(error?.message)
-            // setLoading(false)
-            return;
-        }
-        if(data){
-            console.log(data)
-        }
-    }
 
     useEffect(() => {
         console.log(jobData)
@@ -52,8 +39,6 @@ export default function CheckoutForm() {
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
-                    console.log("Success")
-                    UploadJobSupabase()
                     break;
                 case "processing":
                     setMessage("Your payment is processing.");

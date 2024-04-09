@@ -21,22 +21,7 @@ const PostJob = () => {
   const [clientSecret, setClientSecret] = useState("");
   const { jobData } = state
   const [windowLoading, setWindowLoading] = useState(false)
-  // const [jobData, setJobData] = useState({
-  //   tags: [],
-  //   comp_name: "",
-  //   comp_website: "",
-  //   job_title: "",
-  //   comp_logo: "",
-  //   is_remote: "yes",
-  //   primary_location: "",
-  //   job_description: "",
-  //   full_name: "",
-  //   email: ""
-  // })
 
-  // useEffect(()=>{
-  //   console.log(state)
-  // },[state])
 
 
   const handleDropdownChange = (item) => {
@@ -46,7 +31,6 @@ const PostJob = () => {
         ...jobData,
         is_remote: item.value
       }
-      // is_remote: item.value
     });
   };
 
@@ -60,7 +44,6 @@ const PostJob = () => {
       .from('images')
       .upload(uuidv4(), file)
 
-    // console.log({ data });
     if (data) {
       setState({
         ...state,
@@ -68,23 +51,16 @@ const PostJob = () => {
           ...jobData,
           comp_logo: supabaseBucketBaseUrl + data?.Key
         }
-        // is_remote: item.value
       });
-
-      // setJobData({
-      //   ...jobData,
-      //   comp_logo: supabaseBucketBaseUrl + data?.Key,
-      // });
     } else {
-      // console.log(error);
+      console.log(error);
     }
   }
 
-  // useEffect(() => {
-  const fetchFunc = async () => {
+  const fetchPaymentIntentStrip = async () => {
     setLoading(true)
-    const { data, error } = await supabase.functions.invoke('hello-world', {
-      body: JSON.stringify({ name: 'bar' }),
+    const { data, error } = await supabase.functions.invoke('create-payment-intent', {
+      body: JSON.stringify({ amount: 9900 }),
       mode: 'no-cors',
     })
 
@@ -94,12 +70,28 @@ const PostJob = () => {
     }
     if (data) {
       setClientSecret(data?.clientSecret?.client_secret);
-      console.log(data, "DSA")
       setIsOpen(true)
       setLoading(false)
       localStorage.setItem("job-data", JSON.stringify(jobData))
     }
 
+  }
+
+
+  const uploadJobSupabase = async (jobData) => {
+    const { data, error } = await supabase
+      .from('Jobs')
+      .insert(jobData)
+
+    if (error) {
+      console.log(error?.message)
+      setWindowLoading(false)
+    }
+
+    if (data) {
+      setWindowLoading(false)
+      navigate("/")
+    }
   }
 
 
@@ -112,7 +104,7 @@ const PostJob = () => {
 
     if (paymentIntent && paymentIntentClientSecret && redirectStatus === "succeeded" && job) {
       setWindowLoading(true)
-      console.log(JSON.parse(job))
+      uploadJobSupabase(JSON.parse(job))
     }
   }, []);
 
@@ -121,8 +113,7 @@ const PostJob = () => {
     setIsOpen(false)
     clientSecret("")
   }
-  // }
-  //   , [visible])
+
 
   const { values, handleSubmit, handleChange, errors, touched, isValid, submitCount, } = useFormik({
     initialValues: {
@@ -135,37 +126,17 @@ const PostJob = () => {
       full_name: "",
       email: ""
     },
-    // handleChange = (e)=>{
 
-    // },
     validationSchema: jobInfoSchema,
     onSubmit: async (values) => {
 
       if (!jobData.comp_logo || jobData.comp_logo === "") {
-        // toast.error("Company logo is required");
-        // console.log("object")
-        return;
+        toast.error("Company logo is required");
+        console.log("object")
+
+      } else {
+        fetchPaymentIntentStrip()
       }
-      // setIsOpen(true)
-      fetchFunc()
-
-      // const { data, error } = await supabase
-      //   .from('Jobs')
-      //   .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
-
-      // if (error) {
-      //   toast.error(error?.message)
-      //   setLoading(false)
-      //   return;
-      // }
-
-      // if (data && isValid) {
-      //   setLoading(false);
-      //   toast.success("Job posted successfully");
-      //   setTimeout(() => {
-      //     navigate("/");
-      //   }, 2000);
-      // }
 
     }
 
@@ -173,15 +144,13 @@ const PostJob = () => {
   });
 
   const customHandleChange = (e, name) => {
-    handleChange(e); // Call the original handleChange function from useFormik
-    // setJobdata({ ...values, [e.target.name]: e.target.value }); // Update Jobdata state
+    handleChange(e);
     setState({
       ...state,
       jobData: {
         ...jobData,
         [name]: e.target.value
       }
-      // is_remote: item.value
     });
   };
 
@@ -195,13 +164,6 @@ const PostJob = () => {
     }
   }, [isValid, submitCount])
 
-  const SubmitHandler = (e) => {
-    e.preventDefault()
-    setIsOpen(true)
-  }
-
-
-  // handleChange = (e)=>{console.log(e)}
 
   return (
     <>
