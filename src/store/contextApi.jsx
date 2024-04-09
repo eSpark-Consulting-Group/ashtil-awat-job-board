@@ -10,7 +10,21 @@ const ContextApi = ({ children }) => {
 
   const [state, setState] = useState({
     searchTerm: '',
+    jobData: {
+      tags: [],
+      comp_name: "",
+      comp_website: "",
+      job_title: "",
+      comp_logo: "",
+      is_remote: "yes",
+      primary_location: "",
+      job_description: "",
+      full_name: "",
+      email: ""
+    },
   })
+
+
 
 
   return (

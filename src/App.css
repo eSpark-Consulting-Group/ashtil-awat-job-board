@@ -141,7 +141,7 @@
     row-gap: 10px;
 }
 
-.cards-conatiner>div{
+.cards-conatiner>div {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
@@ -240,6 +240,7 @@
     background-color: green;
     color: white;
 }
+
 .general-btn-cancel {
     border-radius: 4px;
     padding: 0px 10px;
@@ -284,7 +285,8 @@
     padding-top: 10px;
 }
 
-.job-requirements,.job-responsibilites{
+.job-requirements,
+.job-responsibilites {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -415,7 +417,8 @@
     row-gap: 20px;
     padding-bottom: 20px;
 }
-.job-inputs-boxes{
+
+.job-inputs-boxes {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -429,7 +432,8 @@
     justify-content: center;
     align-items: center;
 }
-.tagline{
+
+.tagline {
     width: 70%;
 }
 
@@ -486,10 +490,11 @@
     height: 35px;
 }
 
-.show-preview{
+.show-preview {
     visibility: visible;
 }
-.hide-preview{
+
+.hide-preview {
     visibility: hidden;
 
 }
@@ -541,7 +546,8 @@ textarea {
     display: flex;
     justify-content: flex-end;
 }
-.job-apply-button button{
+
+.job-apply-button button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -558,22 +564,25 @@ textarea {
     cursor: pointer;
 }
 
-.input-parent label{
+.input-parent label {
     font-size: 14px;
 }
 
-.labelFile p{
+.labelFile p {
     font-size: 12px;
 }
-.labelFile svg{
+
+.labelFile svg {
     margin-top: 4px;
 }
 
-.comapny-info > h3, .job-details>h3{
+.comapny-info>h3,
+.job-details>h3 {
     font-size: 16px;
 }
 
-.tagline h3, .personal-inputs-text h3{
+.tagline h3,
+.personal-inputs-text h3 {
     font-size: 16px;
     font-weight: 500;
 }
@@ -623,7 +632,8 @@ textarea {
     .job-post-box {
         width: 90vw;
     }
-    .tagline{
+
+    .tagline {
         width: 100%;
     }
 }
@@ -675,7 +685,7 @@ textarea {
         align-items: center;
     }
 
-    .portal-no-jobs-screen{
+    .portal-no-jobs-screen {
         height: 45vh;
     }
 
@@ -700,7 +710,8 @@ textarea {
     }
 
     .company-inputs,
-    .job-inputs,.job-apply-button {
+    .job-inputs,
+    .job-apply-button {
         width: 90vw;
         margin: 0 auto;
     }
@@ -721,3 +732,77 @@ textarea {
         width: 100%;
     }
 }
+
+.rodal-dialog {
+    width: 30vw !important;
+    min-height: 500px !important;
+    padding-bottom: 0px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+
+
+
+
+#payment-form {
+    width: 30vw;
+    min-width: 500px;
+    align-self: center;
+    /* box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+        0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07); */
+    border-radius: 7px;
+    padding: 40px;
+}
+
+#payment-form button {
+    background: #5469d4;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    border-radius: 4px;
+    border: 0;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    transition: all 0.2s ease;
+    box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    margin-top: 20px;
+}
+
+#payment-form button:hover {
+    filter: contrast(115%);
+}
+
+#payment-form button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px){
+    .rodal-dialog{
+        width: 80vw !important;
+        height: 650px !important;
+    }
+}
+@media only screen and (min-width: 901px) and (max-width: 1600px){
+    .rodal-dialog{
+        width: 50vw !important;
+        height: 650px !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #payment-form {
+        width: 80vw;
+        min-width: initial;
+    }
+    .rodal-dialog{
+        width: 90vw !important;
+        height: 650px !important;
+    }
+}
+

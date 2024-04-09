@@ -9,29 +9,43 @@ import { jobInfoSchema } from '../schemas';
 import { toast } from 'react-toastify';
 import { Header, Dropdown, Input, ImgUploader } from '../components';
 import Loader from "react-js-loader";
+import Modal from '../components/Modal/Modal';
+import { StateCall } from '../store/contextApi';
 
 
 const PostJob = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [jobData, setJobData] = useState({
-    tags: [],
-    comp_name: "",
-    comp_website: "",
-    job_title: "",
-    comp_logo: "",
-    is_remote: "yes",
-    primary_location: "",
-    job_description: "",
-    full_name: "",
-    email: ""
-  })
+  const [isOpen, setIsOpen] = useState(false)
+  const { state, setState } = StateCall()
+  const [clientSecret, setClientSecret] = useState("");
+  const { jobData } = state
+  // const [jobData, setJobData] = useState({
+  //   tags: [],
+  //   comp_name: "",
+  //   comp_website: "",
+  //   job_title: "",
+  //   comp_logo: "",
+  //   is_remote: "yes",
+  //   primary_location: "",
+  //   job_description: "",
+  //   full_name: "",
+  //   email: ""
+  // })
+
+  // useEffect(()=>{
+  //   console.log(state)
+  // },[state])
 
 
   const handleDropdownChange = (item) => {
-    setJobData({
-      ...jobData,
-      is_remote: item.value
+    setState({
+      ...state,
+      jobData: {
+        ...jobData,
+        is_remote: item.value
+      }
+      // is_remote: item.value
     });
   };
 
@@ -47,16 +61,54 @@ const PostJob = () => {
 
     // console.log({ data });
     if (data) {
-      setJobData({
-        ...jobData,
-        comp_logo: supabaseBucketBaseUrl + data?.Key,
+      setState({
+        ...state,
+        jobData: {
+          ...jobData,
+          comp_logo: supabaseBucketBaseUrl + data?.Key
+        }
+        // is_remote: item.value
       });
+
+      // setJobData({
+      //   ...jobData,
+      //   comp_logo: supabaseBucketBaseUrl + data?.Key,
+      // });
     } else {
       // console.log(error);
     }
   }
 
-  const { values, handleSubmit, handleChange, errors, touched, isValid, submitCount } = useFormik({
+  // useEffect(() => {
+  const fetchFunc = async () => {
+    setLoading(true)
+    const { data, error } = await supabase.functions.invoke('hello-world', {
+      body: JSON.stringify({ name: 'bar' }),
+      mode: 'no-cors',
+    })
+
+    if (error) {
+      toast.error("Something went wrong. Please try again")
+      setLoading(false)
+    }
+    if (data) {
+      setClientSecret(data?.clientSecret?.client_secret);
+      console.log(data, "DSA")
+      setIsOpen(true)
+      setLoading(false)
+    }
+
+  }
+
+
+  const CloseHandler = () => {
+    setIsOpen(false)
+    clientSecret("")
+  }
+  // }
+  //   , [visible])
+
+  const { values, handleSubmit, handleChange, errors, touched, isValid, submitCount, } = useFormik({
     initialValues: {
       tags: [],
       comp_name: "",
@@ -67,39 +119,56 @@ const PostJob = () => {
       full_name: "",
       email: ""
     },
+    // handleChange = (e)=>{
+
+    // },
     validationSchema: jobInfoSchema,
     onSubmit: async (values) => {
-      setLoading(true)
 
       if (!jobData.comp_logo || jobData.comp_logo === "") {
         // toast.error("Company logo is required");
         // console.log("object")
-        setLoading(false);
         return;
       }
+      // setIsOpen(true)
+      fetchFunc()
 
-      const { data, error } = await supabase
-        .from('Jobs')
-        .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
+      // const { data, error } = await supabase
+      //   .from('Jobs')
+      //   .insert({ ...values, is_remote: jobData.is_remote, comp_logo: jobData.comp_logo })
 
-      if (error) {
-        toast.error(error?.message)
-        setLoading(false)
-        return;
-      }
+      // if (error) {
+      //   toast.error(error?.message)
+      //   setLoading(false)
+      //   return;
+      // }
 
-      if (data && isValid) {
-        setLoading(false);
-        toast.success("Job posted successfully");
-        setTimeout(() => {
-          navigate("/"); 
-        }, 2000); 
-      }
+      // if (data && isValid) {
+      //   setLoading(false);
+      //   toast.success("Job posted successfully");
+      //   setTimeout(() => {
+      //     navigate("/");
+      //   }, 2000);
+      // }
 
     }
 
 
   });
+
+  const customHandleChange = (e, name) => {
+    handleChange(e); // Call the original handleChange function from useFormik
+    // setJobdata({ ...values, [e.target.name]: e.target.value }); // Update Jobdata state
+    setState({
+      ...state,
+      jobData: {
+        ...jobData,
+        [name]: e.target.value
+      }
+      // is_remote: item.value
+    });
+  };
+
   useEffect(() => {
     if (submitCount > 0 && !isValid) {
       const firstError = Object.values(errors)[0];
@@ -109,6 +178,12 @@ const PostJob = () => {
       toast.error("Company logo is required");
     }
   }, [isValid, submitCount])
+
+  const SubmitHandler = (e) => {
+    e.preventDefault()
+    setIsOpen(true)
+  }
+  // handleChange = (e)=>{console.log(e)}
 
   return (
     <>
@@ -127,7 +202,7 @@ const PostJob = () => {
               <div className="company-inputs-parent">
                 {companyInputs.map((item, index) => (
                   <div className="company-inputs" key={index}>
-                    <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                    <Input value={values[item?.name]} onChange={(e) => customHandleChange(e, item?.name)} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
 
                   </div>
                 ))}
@@ -151,7 +226,7 @@ const PostJob = () => {
                   <div className="job-inputs">
                     {item?.type === "text"
                       ?
-                      <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                      <Input value={values[item?.name]} onChange={(e) => customHandleChange(e, item?.name)} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
 
                       :
                       <>
@@ -171,17 +246,20 @@ const PostJob = () => {
                 <label htmlFor="job_description" style={{ fontSize: "14px" }}>
                   Job Description
                 </label>
-                <textarea value={values.job_description} onChange={handleChange} name="job_description" id="job_description" cols="30" rows="6"></textarea>
+                <textarea value={values.job_description} onChange={(e) => customHandleChange(e, "job_description")} name="job_description" id="job_description" cols="30" rows="6"></textarea>
               </div>
               <TagsInput
                 value={values.tags}
                 onChange={(tags) => {
-                  handleChange({
+                  customHandleChange({
                     target: {
                       name: "tags",
                       value: tags,
                     },
-                  });
+
+                  },
+                    "tags"
+                  );
                 }}
                 name="tags"
                 placeHolder="Tags(Start with #)"
@@ -203,7 +281,7 @@ const PostJob = () => {
                 </div>
                 {personalInfo.map((item, index) => (
                   <div className="personal-inputs" key={index}>
-                    <Input value={values[item?.name]} onChange={handleChange} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
+                    <Input value={values[item?.name]} onChange={(e) => customHandleChange(e, item?.name)} label={item?.label} placeholder={item?.placeholder} name={item?.name} type={item?.type} />
 
                   </div>
                 ))}
@@ -213,7 +291,7 @@ const PostJob = () => {
               <button type='submit'>{loading ? <Loader type="spinner-default" bgColor={"#ffffff"} color={"#00ff37"} size={30} /> : "Apply for $99"}</button>
             </div>
           </form>
-
+          <Modal clientSecret={clientSecret} visible={isOpen} onClose={CloseHandler} />
         </div>
       </div>
 
