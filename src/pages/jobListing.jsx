@@ -59,21 +59,22 @@ const JobListing = () => {
     }
   }, [jobs]);
 
+  
+
+
 
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  if (!loading && filteredJobs?.length <= 0) {
-    return (
-      <div className='portal-no-jobs-screen'>
-        <h3>No Jobs Found</h3>
-      </div>
-    )
-  }
-
-  console.log(activeItem)
+  // if (!loading && filteredJobs?.length <= 0) {
+  //   return (
+  //     <div className='portal-no-jobs-screen'>
+  //       <h3>No Jobs Found</h3>
+  //     </div>
+  //   )
+  // }
 
 
 
@@ -101,13 +102,13 @@ const JobListing = () => {
 
 
       {
-        !loading ?
+        !loading && filteredJobs.length > 0 ?
           <>
             <div className="portal-main">
               <div className="cards-conatiner">
                 <div>
                   {getCurrentPageJobs(page, itemsPerPage, filteredJobs)?.map((item, index) => (
-                    <JobCard item={item} index={index} jobs={jobs} activeItem={activeItem} setActiveItem={setActiveItem} />
+                    <JobCard item={item} key={index} index={index} jobs={jobs} activeItem={activeItem} setActiveItem={setActiveItem} />
                   )
                   )}
                 </div>
@@ -127,9 +128,14 @@ const JobListing = () => {
               <JobInfo activeItem={activeItem} />
             </div>
           </>
-          : <div className='portal-no-jobs-screen'>
-            <Loader type="spinner-default" bgColor={"#48494a"} color={"#00ff37"} size={40} />
-          </div>
+          :
+          !loading && filteredJobs.length <= 0 ?
+            <div className='portal-no-jobs-screen'>
+              <h3>No Jobs Found</h3>
+            </div> :
+            <div className='portal-no-jobs-screen'>
+              <Loader type="spinner-default" bgColor={"#48494a"} color={"#00ff37"} size={40} />
+            </div>
       }
 
 

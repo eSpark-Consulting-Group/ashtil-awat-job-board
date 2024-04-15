@@ -17,9 +17,9 @@ export default function CheckoutForm() {
 
 
 
-    useEffect(() => {
-        console.log(jobData)
-    }, [state])
+    // useEffect(() => {
+    //     console.log(jobData)
+    // }, [state])
 
     useEffect(() => {
         if (!stripe) {
@@ -54,6 +54,15 @@ export default function CheckoutForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const url = window.location.href.split(":")
+        let baseUrl = "";
+        console.log(url[0])
+        if(url[0] === "http"){
+            baseUrl = "http://127.0.0.1:5173/post-a-job"
+        }
+        else{
+            baseUrl = "https://ashtilawat-jobbboar-git-7e2e19-espark-web-application-developme.vercel.app/post-a-job"
+        }
 
         if (!stripe || !elements) {
             // Stripe.js hasn't yet loaded.
@@ -67,7 +76,7 @@ export default function CheckoutForm() {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: "http://127.0.0.1:5173/post-a-job",
+                return_url: baseUrl,
             },
         });
 

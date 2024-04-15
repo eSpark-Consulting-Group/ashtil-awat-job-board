@@ -162,9 +162,9 @@ const PostJob = () => {
       const firstError = Object.values(errors)[0];
       toast.error(firstError);
     }
-    else if ((submitCount > 0 && !jobData.comp_logo) || (submitCount > 0 && jobData.comp_logo === "")) {
-      toast.error("Company logo is required");
-    }
+    // else if ((submitCount > 0 && !jobData.comp_logo) || (submitCount > 0 && jobData.comp_logo === "")) {
+    //   toast.error("Company logo is required");
+    // }
   }, [isValid, submitCount])
 
 
